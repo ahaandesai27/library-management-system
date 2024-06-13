@@ -1,0 +1,35 @@
+1. Books Table:
+   - book_id (Primary Key)
+   - title: String
+   - author: String
+   - genre: String
+	- borrowed: boolean
+
+
+2. Members (Borrowers) Table:
+   - member_id (Primary Key)
+   - member_name
+   - phone
+   - email
+   - join_date
+
+3. Transactions Table:
+   - transaction_id (Primary Key)
+   - book_id (Foreign Key references Books)
+   - member_id (Foreign Key references Members)
+   - issue_date
+   - due_date
+   - return_date
+   - fine_amount (some formula)
+
+1. Create book: POST api/books
+2. Get all books: GET api/books
+3. Get single book: GET api/books/:id
+     Get books with query: GET api/books/search? 
+4. Update single book: PATCH api/books/:id
+5. Delete single book: DELETE api/books/:id
+	Delete multiple books: DELETE api/books/search?
+
+[Similar approach for members and transactions]
+
+

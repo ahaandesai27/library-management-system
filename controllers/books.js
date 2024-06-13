@@ -1,4 +1,4 @@
-const Books = require('../schema/schema.js');
+const Books = require('../schema/books.js');
 const wrap = require('express-async-wrapper');
 
 const getBooks = wrap(async (req, res) => {
@@ -29,28 +29,20 @@ const deleteBookByID = wrap(async (req, res) => {
 });
 
 const searchBook = wrap(async (req, res) => {
+    //Query string setup
     const {title, author, genre} = req.query;
-    let p = await Books.find({});
-    if (title) {
-        p = p.filter(book => book.title == title);
+    let query = {};
+    if (title) query.title = title;
+    if (author) query.author = author;
+    if (genre) query.genre = genre;
+
+    let books = await Books.find(query);
+    if (books.length == 0) {
+        res.status(404).json({"message": "No books found"});
     }
-    if (author) {
-        p = p.filter(book => book.author == author);
-    }
-    if (genre) {
-        p = p.filter(book => book.genre == genre);
-    }
-    if (p.length < 1) {
-        res.status(404).json({message: "No books found"});
-    }
-    res.status(200).json(p);
+    res.status(200).json(books);
 });
 
-// const searchAuthor = wrap(async (req, res) => {
-//     const author = req.query.author;
-//     const books = await Books.find({author: author});
-//     res.status(200).json(books);
-// });
 
 
 
