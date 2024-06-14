@@ -3,9 +3,9 @@ const wrap = require('express-async-wrapper');
 
 
 const addMember = wrap(async (req, res) => {
-    const exists = Members.isThisContact(req.body.contact);
+    const exists = await Members.findOne({contact: req.body.contact});
     if (exists) {
-        res.status(500).send("Contact number already exists");
+        return res.status(500).send("Error: Either contact number already exists or an internal server error has occured.");
     }
     const member = await Members.create(req.body);
     await member.save();

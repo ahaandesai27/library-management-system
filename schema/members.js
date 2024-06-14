@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');   
+const mongoose = require('mongoose'); 
+const {setRenewal} = require('../middleware/setRenewal');  
 
 const Members = new mongoose.Schema({
     name: {
@@ -8,17 +9,9 @@ const Members = new mongoose.Schema({
     contact: {
         type: Number,
         required: true,
-        
-        validate: {
-            validator: async (v) => {
-                const x = await mongoose.models.Members.findOne({contact: v});
-                return !x;
-            },
-            message: props => `Contact number ${props.value} already exists`
-        }
     },
     books: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
         default: []
     },
     join_date: {
@@ -29,37 +22,15 @@ const Members = new mongoose.Schema({
         type: Date,
         default: () => {
             let date = new Date();
-            date.setDate(date.getMonth() + 1);
+            date.setMonth(date.getMonth() + 1);
             return date;
         }
     },
     renewal: {
         type: Boolean,
-        default: true
+        default: false
     }
 });
 
-Members.statics.isThisContact = async function(Contact) {
-    if (!Contact) {
-        throw new Error("invalid contact");
-    }
-    try {
-        const member = await this.findOne({contact: Contact});
-        if (member) return false;
-        return true;
-    }
-    catch(error) {
-        console.log(`Error inside: ${error}`);
-        return false;
-    }
-}
-
-Members.pre('save', (next) => {
-    const currentDate = new Date();
-    if (this.renewal_date && currentDate > this.renewal_date) {
-        this.status = false;
-    }
-    next();
-})
-
+Members.pre('save', setRenewal);
 module.exports = mongoose.model('members', Members);

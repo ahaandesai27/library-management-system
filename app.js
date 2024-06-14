@@ -10,7 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('/public'));
 app.use('/api/books', require('./routes/books'));
-app.use('/api/members', require('./routes/members'));  
+app.use('/api/members', require('./routes/members')); 
+app.use('/api/transactions', require('./routes/transactions')); 
 
 
 
