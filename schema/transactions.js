@@ -1,17 +1,20 @@
 const mongoose = require('mongoose');   
+const {setFineAmount} = require('../middleware/setFineAmount');
 
 const Transactions = new mongoose.Schema({
     book_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'books'
+        ref: 'books',
+        required: true
     },
     member_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'members'
+        ref: 'members',
+        required: true
     },
     issue_date: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     return_date: {
         type: Date,
@@ -23,18 +26,7 @@ const Transactions = new mongoose.Schema({
     },
     fine_amount: {
         type: Number,
-        default: () => {
-            let date = new Date();
-            let return_date = this.return_date;
-            let diff = return_date - date;
-            let days = diff/(1000*60*60*24);
-            if (days > 7) {
-                return (days - 7) * 5;
-            }
-            else {
-                return 0;
-            }
-        }
+        default: setFineAmount
     }
 });
 

@@ -21,17 +21,23 @@ const getMembers = wrap(async (req, res) => {
 
 const getMember = wrap(async (req, res) => {
     const member = await Members.findById(req.params.id);   
+    if (!member) return res.status(404).send("Error: Member not found.");
     res.status(200).json(member);
 });
 
 const deleteMember = wrap(async (req, res) => {
     const member = await Members.findOneAndDelete({_id: req.params.id});   
+    if (!member) return res.status(404).send("Error: Member not found.");
+    if (member.books.length > 0) {
+        return res.status(400).send("Error: Member has books to return. Cannot delete just yet.");
+    }
     res.status(200).json(member);
 });
 
 const updateMember = wrap(async (req, res) => {   
-    const book  = await Members.findOneAndUpdate({_id: req.params.id}, req.body , {new: true, runValidators: true});
-    res.status(200).json(book);
+    const member  = await Members.findOneAndUpdate({_id: req.params.id}, req.body , {new: true, runValidators: true});
+    if (!member) return res.status(404).send("Error: Member not found.");
+    res.status(200).json(member);
 });
 
 module.exports = {
