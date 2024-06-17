@@ -1,11 +1,12 @@
 const express = require('express');
 const Router = express.Router();    
 const {getBooks, createBook, getBookByID, updateBookByID, deleteBookByID, 
-    searchBook, searchAuthor
+    searchBook, sortBooksBy
 } = require('../controllers/books');
 
 Router.route('/').get(getBooks).post(createBook);
 Router.route('/search').get(searchBook);
+Router.route('/sort').get(sortBooksBy);
 Router.route('/:id').get(getBookByID).patch(updateBookByID).delete(deleteBookByID);
 
 

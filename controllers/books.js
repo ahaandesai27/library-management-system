@@ -43,6 +43,24 @@ const searchBook = wrap(async (req, res) => {
     res.status(200).json(books);
 });
 
+const sortBooksBy = wrap(async (req, res) => {
+    const {query} = req.query;
+    let books;
+    if (query == "title") {
+        books = await Books.find({}).sort({title: 1});
+    }
+    else if (query == "author") {
+        books = await Books.find({}).sort({author: 1});
+    }
+    else if (query == "genre") {
+        books = await Books.find({}).sort({genre: 1});
+    }
+    else {
+        res.status(404).json({"message": "Invalid query"});
+    }
+    res.status(200).json({"books": books});
+})  
+
 
 
 
@@ -52,7 +70,8 @@ module.exports = {
     getBookByID,
     updateBookByID,
     deleteBookByID,
-    searchBook
+    searchBook,
+    sortBooksBy
 }
 
 //ID functions work with the _id field that MongoDB automatically generates for each document.
