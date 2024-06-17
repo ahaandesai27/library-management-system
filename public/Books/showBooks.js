@@ -12,7 +12,7 @@ const sortBooks = async (query) => {
             let borrow = borrowed ? 'Yes' : 'No';
             return rowTemplate(_id, title, author, genre, borrow);
         })
-        const template = tableTemplate(allBooks);
+        const template = tableTemplate(allBooks, query);
         render(template, tableDiv);
     }
     catch (error) {

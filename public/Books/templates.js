@@ -12,13 +12,15 @@ export const rowTemplate = (_id, title, author, genre, borrow) => {
 }
 
 
-export const tableTemplate = (allBooks) => {
+export const tableTemplate = (allBooks, query) => {
     return html `
-            <div class="centered-btn-group">
-                <div class="dropdown">
-                    <a type="button" class="btn btn-secondary" href='/addbook'>
-                        Add Book
-                    </a>
+            <div class="d-flex justify-content-around">
+                
+                <div>
+                    <a type="button" class="btn btn-secondary" href='/addbook'>Add Book</a>
+                </div>
+
+                <div>
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
                         Sort By
                     </button>
@@ -27,6 +29,12 @@ export const tableTemplate = (allBooks) => {
                         <li><button class="dropdown-item" id="sort-by-author">Author</button></li>
                         <li><button class="dropdown-item" id="sort-by-genre">Genre</button></li>
                     </ul>
+                </div>
+                <div>
+                    <form action="/search" method="get">
+                        <input type="search" id="searchBook" name="${query}" placeholder="Search by ${query}">
+                        <button type="button" class="btn btn-secondary searchSubmit" id="searchSubmit">Search</button>
+                    </form>
                 </div>
             </div>
             <div class="pt-5">
