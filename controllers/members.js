@@ -40,10 +40,20 @@ const updateMember = wrap(async (req, res) => {
     res.status(200).json(member);
 });
 
+const searchMember = wrap(async (req, res) => {
+    let members = await Members.find(req.query);
+    if (members.length == 0) {
+        res.status(404).json({"message": "No books found"});
+    }
+    res.status(200).json(members);
+});
+
+
 module.exports = {
     getMembers,
     addMember,
     getMember,
     updateMember,
     deleteMember,
+    searchMember
 }

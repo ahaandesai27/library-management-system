@@ -15,6 +15,7 @@ app.use('/api/books', require('./routes/books'));
 app.use('/api/members', require('./routes/members')); 
 app.use('/api/transactions', require('./routes/transactions')); 
 
+//will set all these routes up later in a file
 
 app.get('/addbook', (req, res) => {
     res.sendFile(__dirname + '/public/Books/addbook.html');
@@ -24,6 +25,13 @@ app.get('/editbook/:id' , validateID, (req, res) => {
     res.sendFile(__dirname + '/public/Books/editbook.html');
 });
 
+app.get('/addmember', (req, res) => {
+    res.sendFile(__dirname + '/public/Members/addmember.html');
+});
+
+app.get('/editmember/:id' , validateID, (req, res) => {  
+    res.sendFile(__dirname + '/public/Members/editmember.html');
+});
 
 const start = wrap(async () => {
     await connectDB(connectionString);
