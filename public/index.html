@@ -18,6 +18,9 @@
             justify-content: center;
             gap: 20px; 
         }
+        @media screen and (min-width: 768px) {
+            
+        }   
     </style>
 </head>
 <body>
@@ -29,7 +32,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <div class="btn-group-vertical ps-5 pt-4">
+                <div id="button-group" class="d-flex flex-wrap btn-group-vertical ps-5 pt-4">
                     <div class="pb-4">
                         <button type="button" class="btn btn-secondary btn-v1" id="viewBooks">Show Books</button>
                     </div>
@@ -44,6 +47,9 @@
                     </div>
                     <div class="pb-4">
                         <button type="button" class="btn btn-secondary btn-v1">Add Transaction</button>
+                    </div>  
+                    <div class="pb-4">
+                        <button type="button" class="btn btn-secondary btn-v1">Edit Transaction</button>
                     </div>  
                 </div>
             </div>
@@ -73,5 +79,30 @@
     
     <script src="./Members/showMembers.js" type="module"></script>  
     <script src="./Members/searchMember.js" type="module"></script>
+
+    <script>
+        const buttonGroup = document.getElementById("button-group");
+
+        function toggleWidth() {
+            if (window.innerWidth <= 768) {
+                console.log('we here');
+                if (buttonGroup.classList.contains('btn-group-vertical'))  {
+                    console.log('we here');
+                    buttonGroup.classList.remove('btn-group-vertical');
+                    buttonGroup.classList.add('btn-group-horizontal');
+                }
+            }
+            else {
+                if (buttonGroup.classList.contains('btn-group-horizontal'))  {
+                    buttonGroup.classList.remove('btn-group-horizontal');
+                    buttonGroup.classList.add('btn-group-vertical');
+                }
+            }
+        }
+
+        window.addEventListener('resize', toggleWidth);
+
+        toggleWidth();
+    </script>
 </body>
 </html>

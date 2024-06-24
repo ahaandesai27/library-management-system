@@ -9,12 +9,12 @@ const addTransaction = wrap(async (req, res) => {
     const {book_id, member_id} = req.query;
    
     const book = await Books.findById(book_id);
-    if (!book) return res.status(404).json({"msg": "Book not found"});
-    else if (book.borrowed) return res.status(400).json({"msg": "Book is already borrowed"});
+    if (!book) return res.status(404).json({"err": "Book not found"});
+    else if (book.borrowed) return res.status(400).json({"err": "Book is already borrowed"});
 
     const member = await Members.findById(member_id);
-    if (!member) return res.status(404).json({"msg": "Member not found"});
-    else if (member.books.length >= 3) return res.status(400).json({"msg": "Member has already borrowed maximum books"});
+    if (!member) return res.status(404).json({"err": "Member not found"});
+    else if (member.books.length >= 3) return res.status(400).json({"err": "Member has already borrowed maximum books"});
 
     const transaction = await Transactions.create({
         book_id: book_id,
