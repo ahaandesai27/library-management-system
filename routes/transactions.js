@@ -5,6 +5,6 @@ const {addTransaction, deleteTransaction, getTransactions,
 
 Router.route('/').get(getTransactions);
 Router.route('/add?').post(addTransaction);
-Router.route('/:id').delete(deleteTransaction).get(getTransaction).put(updateTransaction);
+Router.route('/:id').delete(deleteTransaction).get(getTransaction).patch(updateTransaction);
 
 module.exports = Router;

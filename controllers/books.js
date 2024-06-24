@@ -8,6 +8,11 @@ const getBooks = wrap(async (req, res) => {
         {"books": books, "quantity": length});
 });
 
+const getUnborrowedBooks = wrap(async (req, res) => {
+    const books = await Books.find({borrowed: false});
+    res.status(200).json({"books": books});
+})
+
 const createBook = wrap(async (req, res) => {
     const book = await Books.create(req.body);
     res.status(201).json(book);
@@ -71,7 +76,8 @@ module.exports = {
     updateBookByID,
     deleteBookByID,
     searchBook,
-    sortBooksBy
+    sortBooksBy,
+    getUnborrowedBooks
 }
 
 //ID functions work with the _id field that MongoDB automatically generates for each document.

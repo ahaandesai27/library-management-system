@@ -9,8 +9,9 @@ const form = document.getElementById('add-transaction');
 async function populateDropdowns() {
     //Send get request to /books and /members
     try {
-        let response = await axios.get('/api/books');
+        let response = await axios.get('/api/books/inlibrary');
         const books= response.data.books;
+        console.log(books);
         books.forEach((book) => {
             const {_id, title} = book;
             const option = document.createElement('option');
@@ -20,7 +21,8 @@ async function populateDropdowns() {
         }) 
 
         response = await axios.get('/api/members');
-        const members = response.data.members;
+        const members = response.data.Members;
+        console.log(members);
         members.forEach((member) => {
             const {_id, name} = member;
             const option = document.createElement('option');
@@ -30,36 +32,33 @@ async function populateDropdowns() {
         })
     } catch (error) {
         console.log(error);
-        alert("An error occured.");
     }
 }
 document.addEventListener('DOMContentLoaded', populateDropdowns);
 
-bookId.addEventListener('onchange', () => {
-    //appropriate val from bookId, set to dropdown
-    //have to fix
-    //dk if correct
-})
+bookSelect.addEventListener('change', () => {
+    bookId.value = bookSelect.value;
+});
 
-
-memberId.addEventListener('onchange', () => {
-    //appropriate val from memberId, set to dropdown
-    //have to fix
-    //dk if correct
-})
-
-bookSelect.addEventListener('onchange' ,() => {
-    bookId.value = bookSelect.value;        //need check
-})
-memberSelect.addEventListener('onchange', () => {
+memberSelect.addEventListener('change', () => {
     memberId.value = memberSelect.value;
-})
+});
+
+bookId.addEventListener('change', () => {
+    bookSelect.value = bookId.value;
+});
+
+memberId.addEventListener('change', () => {
+    memberSelect.value = memberId.value;
+});
 
 
-async function addTransaction() {
+async function addTransaction(e) {
+    e.preventDefault();
     try {
-        const book = parseInt(bookId.value);
-        const member = parseInt(memberId.value);
+        const book = bookId.value;
+        const member = memberId.value;
+        console.log(book, member);
         
         const {err} = await axios.post(`/api/transactions/add?book_id=${book}&member_id=${member}`)
 

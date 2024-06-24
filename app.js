@@ -33,6 +33,13 @@ app.get('/editmember/:id' , validateID, (req, res) => {
     res.sendFile(__dirname + '/public/Members/editmember.html');
 });
 
+app.get('/transactions/add', (req, res) => {
+    res.sendFile(__dirname + '/public/Transactions/addtransaction.html');
+})
+
+app.get('/transactions/modify', (req, res) => {
+    res.sendFile(__dirname + '/public/Transactions/modifytransaction.html');
+})
 const start = wrap(async () => {
     await connectDB(connectionString);
     console.log('Connected to the database');

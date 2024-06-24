@@ -28,12 +28,21 @@ const addTransaction = wrap(async (req, res) => {
 
 const deleteTransaction = wrap(async(req, res) => {
     const transaction = await Transactions.findOneAndDelete({_id: req.params.id});
-    if (!transaction) return res.status(500).json({"msg": "Transaction not found"});
+    if (!transaction) {
+        return res.status(404).json({"msg": "Transaction not found"});
+    }
 
     const {book_id, member_id} = transaction;
-    await Books.findByIdAndUpdate(book_id, {borrowed: false});
-    await Members.findByIdAndUpdate(member_id, {$pull: {books: book_id}});
-    console.log(transaction);
+    try {
+        await Books.findByIdAndUpdate(book_id, {borrowed: false});
+    }  catch(error) {
+        console.log("Error in updating book!");
+    }
+    try {
+        await Members.findByIdAndUpdate(member_id, {$pull: {books: book_id}});
+    } catch(error) {
+        console.log("Error in updating member!");
+    }
     res.status(200).json(transaction);
 
 });

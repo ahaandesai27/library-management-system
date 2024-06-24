@@ -32,14 +32,16 @@
 <body>
     <div align="center" class="container-fluid upper-div">
         <h1 class="pb-4"> Modify Transaction</h1>
+
         <input class="form-control" placeholder="Enter Transaction ID" id="transaction-id"
         style="width: 70%; background-color: rgb(58, 60, 59);"></input>
         <div class="pt-4"><button class="btn btn-info" id="get-transaction">Get Transaction</button></div>
+
         <div class="pt-4" style="margin-top: 50px;">
-            <form class="container" id="add-transaction">
+            <form class="container" id="modify-transaction">
                 <div id="IDs" class="d-flex justify-content-evenly">
-                    <input class="form-control" placeholder="Book ID" id="book-id" style="width: 40%">
-                    <input class="form-control" placeholder="Member ID" id="member-id" style="width: 40%">
+                    <input class="form-control" placeholder="Book ID" id="book-id" style="width: 40%" disabled>
+                    <input class="form-control" placeholder="Member ID" id="member-id" style="width: 40%" disabled>
                 </div>
                 <br><br>
 
@@ -48,10 +50,13 @@
                     <input class="form-control" id="issue-date" type="date" style="width: 25%" placeholder="Issue Date">
                     
                     <label for="input">Return Date: </label>
-                    <input class="form-control" id="issue-date" type="date" style="width: 25%" placeholder="Issue Date">
+                    <input class="form-control" id="return-date" type="date" style="width: 25%" placeholder="Return Date">
                 </div>
-                <button type="submit" class="btn btn-success" id="editButton">Modify Book</button>
-                <button class="btn btn-danger" id="deleteButton">Delete Book</button>
+                
+                <input class="form-control" id="fine-amount" type="number" style="width: 40%" placeholder="Fine Amount">
+                <br><br>
+                <button type="submit" class="btn btn-success" id="editButton">Edit Transaction</button>
+                <button class="btn btn-danger" id="deleteButton">Delete Transaction</button>
             </form>
                 <div class="pt-4">
                     <a type="button" class="btn btn-secondary btn-v1" href="../index.html">Return to Homepage</a>
@@ -64,6 +69,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="../Transactions/modifytransaction.js" type="module"></script>
 
     <script>
         
