@@ -71,6 +71,7 @@ async function addTransaction(e) {
         console.log(error);
         alert("An error occured");
     }
+    location.reload();
 }
 
 form.addEventListener('submit', addTransaction);

@@ -40,6 +40,11 @@ app.get('/transactions/add', (req, res) => {
 app.get('/transactions/modify', (req, res) => {
     res.sendFile(__dirname + '/public/Transactions/modifytransaction.html');
 })
+
+app.get('/members/:id/transactions', validateID, (req, res) => {
+    res.sendFile(__dirname + '/public/Members/membertransactions.html');
+});
+
 const start = wrap(async () => {
     await connectDB(connectionString);
     console.log('Connected to the database');

@@ -26,15 +26,20 @@ const getMember = wrap(async (req, res) => {
 });
 
 const deleteMember = wrap(async (req, res) => {
-    const member = await Members.findOneAndDelete({_id: req.params.id});   
+    let member = await Members.findOne({_id: req.params.id});   
     if (!member) return res.status(404).send("Error: Member not found.");
     if (member.books.length > 0) {
         return res.status(400).send("Error: Member has books to return. Cannot delete just yet.");
     }
+    member = await Members.findOneAndDelete({_id: req.params.id});
     res.status(200).json(member);
 });
 
-const updateMember = wrap(async (req, res) => {   
+const updateMember = wrap(async (req, res) => { 
+    const exists = await Members.findOne({contact: req.body.contact});
+    if (exists) {
+        return res.status(500).send("Error: Either contact number already exists or an internal server error has occured.");
+    }     
     const member  = await Members.findOneAndUpdate({_id: req.params.id}, req.body , {new: true, runValidators: true});
     if (!member) return res.status(404).send("Error: Member not found.");
     res.status(200).json(member);

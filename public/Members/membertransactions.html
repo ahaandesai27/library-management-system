@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"  data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="mt-2 p-3 ps-5 rounded">
+        <h1 id="header">Transactions</h1>
+        <hr>
+    </div>
+
+    <table class="table table-hover table-dark container ">
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <div class="ps-5 pt-4"><a class="btn btn-secondary" href="/">Return to Homepage</a></div>
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const url = window.location.href.split('/');
+        const id = url[4];
+        async function getMember() {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/members/${id}`);
+                const member = response.data;
+                const {name} = member;
+                document.getElementById('header').innerText = `Transactions for ${name}`;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function fetchTransactionData(transaction) {
+            const {_id, book_id} = transaction;
+            try {
+                const bookResponse = await axios.get(`http://localhost:5000/api/books/${book_id}`);
+                const { title } = bookResponse.data;
+                return `<tr>
+                            <td>${_id}</td>
+                            <td>${title}</td>
+                        </tr>`;
+            } catch (error) {
+                console.error(`Error fetching book ${book_id}:`, error);
+                return ''; // Return empty string or handle error case
+            }
+        }
+
+        async function displayTransactions(transactions) {
+            try {
+                const promises = transactions.map(fetchTransactionData);
+                const transactionRows = await Promise.all(promises);
+                if (transactionRows) {
+                    document.getElementById('table-body').innerHTML = ` <tr><th scope="col">Transaction ID</th><th scope="col">
+                        Book Title</th></tr>` + transactionRows.join('');
+                }
+                else {
+                    document.getElementById('table-body').innerHTML = `<tr><td>No transactions found</td></tr>`;
+                }
+                            
+                    
+            } catch (error) {
+                console.error('Error displaying transactions:', error);
+            }
+        }
+
+        $(document).ready( async () => {
+            try {
+                await getMember();
+                const response = await axios.get(`http://localhost:5000/api/members/${id}/transactions`);
+                const transactions = response.data;
+                await displayTransactions(transactions);
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        });
+    
+    </script>
+</html>

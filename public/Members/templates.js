@@ -6,12 +6,13 @@ export const rowTemplate = (_id, name, contact, join_date, renewal_date) => {
     return html `
         <tr> 
             <td class="col md-1" align = "center"><a href="/editmember/${_id}"><i class="far fa-edit"></i></a></td>
-            <td class="col md-3">${name}</td>
+            <td class="col md-2">${name}</td>
             <td class="col md-3">${contact}</td>
             <td class="col md-3">${formatDate(join_date)}</td> 
             <td class="col md-3">${formatDate(renewal_date)}</td>
+            <td class="col-md-1"><a href="members/${_id}/transactions"><i class="fa fa-book"></i></a></td>
         </tr>`;
-}
+}   
 
 
 export const tableTemplate = (allMembers) => {
@@ -32,10 +33,11 @@ export const tableTemplate = (allMembers) => {
                     <thead>
                         <tr class="table-info"> 
                             <th class="col md-1">Modify</th>
-                            <th class="col md-3">Name</th>
+                            <th class="col md-2">Name</th>
                             <th class="col md-3">Contact</th>
                             <th class="col md-3">Join Date</th> 
                             <th class="col md-3">Renewal Date</th>
+                            <th class="col-md-1">Transactions</th>
                         </tr>
                     </thead>
                     <tbody>
