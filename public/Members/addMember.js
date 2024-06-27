@@ -3,14 +3,17 @@ $(document).ready(() => {
         e.preventDefault();
         const name = $('#member-name').val();
         const contact = $('#member-contact').val();
+        if (!name || !contact) {
+            alert("Please fill all fields");
+            return;
+        }
         try {
             await axios.post('/api/members', {name, contact});
+            alert('Member added successfully');
             $('#member-name').val('');
             $('#member-contact').val('');
-            alert('Member added successfully');
         }
         catch (error) {
-            console.log(error);
             alert('An error occured');
         }
     })

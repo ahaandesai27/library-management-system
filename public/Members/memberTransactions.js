@@ -9,7 +9,7 @@ async function getMember() {
         const {name} = member;
         document.getElementById('header').innerText = `Transactions for ${name}`;
     } catch (error) {
-        console.log(error);
+        alert("An error occured");
     }
 }
 

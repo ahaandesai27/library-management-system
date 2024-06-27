@@ -12,7 +12,6 @@ $(document).ready(async () => {
         $('#book-genre').val(book.data.genre);
     }
     catch (error) {
-        console.log(error);
         alert('An error occured');
     }
 
@@ -21,6 +20,10 @@ $(document).ready(async () => {
         const title = $('#book-title').val();
         const author = $('#book-author').val();
         const genre = $('#book-genre').val();
+        if (!title || !author || !genre) {
+            alert("Please fill all fields");
+            return;
+        }
         try {
             await axios.patch(reqString, {title, author, genre});
             alert('Book edited successfully');
@@ -29,7 +32,6 @@ $(document).ready(async () => {
             $('#book-genre').val('');
         }
         catch (error) {
-            console.log(error);
             alert('An error occured');
         }
     })
@@ -44,7 +46,6 @@ $(document).ready(async () => {
             $('#book-genre').val('');
         }
         catch (error) {
-            console.log(error);
             alert('An error occured');
         }
     })

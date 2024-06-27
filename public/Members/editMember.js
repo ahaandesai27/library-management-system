@@ -24,8 +24,11 @@ $(document).ready(async () => {
         const contact = $('#member-contact').val();
         const join_date = parseDate($('#member-join_date').val());
         const renewal_date = parseDate($('#member-renew_date').val());
-        console.log(join_date, renewal_date);
         const renewal = $('#member-renew').prop('checked');
+        if (!name || !contact || !join_date || !renewal_date) {
+            alert('Please fill all fields');
+            return;
+        }
         try {
             await axios.patch(reqString, {name, contact, join_date, renewal_date, renewal});
             alert('Member edited successfully');

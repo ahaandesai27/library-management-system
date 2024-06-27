@@ -4,6 +4,10 @@ $(document).ready(() => {
         const title = $('#book-title').val();
         const author = $('#book-author').val();
         const genre = $('#book-genre').val();
+        if (!title || !author || !genre) {
+            alert("Please fill all fields!");
+            return;
+        }
         try {
             await axios.post('/api/books', {title, author, genre});
             $('#book-title').val('');
