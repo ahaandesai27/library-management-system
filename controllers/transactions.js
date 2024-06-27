@@ -42,7 +42,7 @@ const deleteTransaction = wrap(async(req, res) => {
         await Members.findByIdAndUpdate(member_id, {$pull: {books: book_id}});
     } catch(error) {
         console.log("Error in updating member!");
-    }
+    } 
     res.status(200).json(transaction);
 
 });
@@ -62,14 +62,14 @@ const getTransaction = wrap(async(req, res) => {
 const getMemberTransaction = wrap(async(req, res) => {
     const memberId = req.params.id;   
     const memberTransactions = await Transactions.find({member_id: memberId});
-    if (!memberTransactions) res.status(404).json({"msg": "Transaction not found"});
+    if (!memberTransactions) {return res.status(404).json({"msg": "Transaction not found"})};
     res.status(200).json(memberTransactions);
 })
 
 const updateTransaction = wrap(async(req, res) => {
     const transactionID = req.params.id;
     const transaction = await Transactions.findByIdAndUpdate(transactionID, req.body, {new: true, runValidators: true});
-    if (!transaction) res.status(404).json({"msg": "Transaction not found"});
+    if (!transaction) return res.status(404).json({"msg": "Transaction not found"});
     res.status(200).json(transaction);
 })
 

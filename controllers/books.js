@@ -37,13 +37,13 @@ const searchBook = wrap(async (req, res) => {
     //Query string setup
     const {title, author, genre} = req.query;
     let query = {};
-    if (title) query.title = title;
-    if (author) query.author = author;
+    if (title) query.title = new RegExp(title, 'i'); // Using regex for partial match
+    if (author) query.author = new RegExp(author, 'i'); // Using regex for partial match
     if (genre) query.genre = genre;
 
     let books = await Books.find(query);
     if (books.length == 0) {
-        res.status(404).json({"message": "No books found"});
+       return res.status(404).json({"message": "No books found"});
     }
     res.status(200).json(books);
 });

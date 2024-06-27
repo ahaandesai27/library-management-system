@@ -31,9 +31,9 @@ export const tableTemplate = (allBooks, query) => {
                     </ul>
                 </div>
                 <div>
-                    <form action="/search" method="get">
+                    <form method="get">
                         <input type="search" id="searchBook" name="${query}" placeholder="Search by ${query}">
-                        <button type="button" class="btn btn-secondary searchSubmit" id="searchSubmit">Search</button>
+                        <button type="submit" class="btn btn-secondary searchSubmit" id="searchSubmit">Search</button>
                     </form>
                 </div>
             </div>

@@ -10,7 +10,6 @@ $(document).ready(async () => {
         $('#book-title').val(book.data.title);
         $('#book-author').val(book.data.author);
         $('#book-genre').val(book.data.genre);
-        $('#book-borrowed').prop('checked', book.data.borrowed);
     }
     catch (error) {
         console.log(error);
@@ -22,14 +21,12 @@ $(document).ready(async () => {
         const title = $('#book-title').val();
         const author = $('#book-author').val();
         const genre = $('#book-genre').val();
-        const borrowed = $('#book-borrowed').prop('checked');
         try {
-            await axios.patch(reqString, {title, author, genre, borrowed});
+            await axios.patch(reqString, {title, author, genre});
             alert('Book edited successfully');
             $('#book-title').val('');
             $('#book-author').val('');
             $('#book-genre').val('');
-            $('#book-borrowed').prop('checked', false);
         }
         catch (error) {
             console.log(error);
@@ -45,7 +42,6 @@ $(document).ready(async () => {
             $('#book-title').val('');
             $('#book-author').val('');
             $('#book-genre').val('');
-            $('#book-borrowed').prop('checked', false);
         }
         catch (error) {
             console.log(error);

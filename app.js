@@ -37,7 +37,11 @@ app.get('/transactions/add', (req, res) => {
     res.sendFile(__dirname + '/public/Transactions/addtransaction.html');
 })
 
-app.get('/transactions/modify', (req, res) => {
+app.get('/transactions/modify/:id', validateID, (req, res) => {
+    res.sendFile(__dirname + '/public/Transactions/modifytransaction.html');
+})
+
+app.get('/transactions/modify/', (req, res) => {
     res.sendFile(__dirname + '/public/Transactions/modifytransaction.html');
 })
 
@@ -45,9 +49,11 @@ app.get('/members/:id/transactions', validateID, (req, res) => {
     res.sendFile(__dirname + '/public/Members/membertransactions.html');
 });
 
+
 const start = wrap(async () => {
     await connectDB(connectionString);
     console.log('Connected to the database');
+    console.log(__dirname)
     app.listen(port, console.log(`Server is running on http://localhost:${port}`));
 })
 

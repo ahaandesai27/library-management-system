@@ -1,7 +1,13 @@
 import {formatDate, parseDate} from '../Members/formateDate.js'
+
 let id;
 $(document).ready(() => {
     //Get Transaction Data
+    const transaction_id = window.location.href.split('/').at(-1);
+    console.log(transaction_id)
+    if (transaction_id && transaction_id != "modify"){
+        $('#transaction-id').val(transaction_id);
+    }
     $('#get-transaction').click(async (e) => {
         try {
             id = $('#transaction-id').val();

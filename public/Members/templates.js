@@ -10,7 +10,7 @@ export const rowTemplate = (_id, name, contact, join_date, renewal_date) => {
             <td class="col md-3">${contact}</td>
             <td class="col md-3">${formatDate(join_date)}</td> 
             <td class="col md-3">${formatDate(renewal_date)}</td>
-            <td class="col-md-1"><a href="members/${_id}/transactions"><i class="fa fa-book"></i></a></td>
+            <td class="col-md-1"><a href="/members/${_id}/transactions"><i class="fa fa-book"></i></a></td>
         </tr>`;
 }   
 
