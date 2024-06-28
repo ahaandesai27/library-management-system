@@ -5,7 +5,6 @@ const port = 5000;
 const connectDB = require('./db/connectDB');
 const wrap = require('express-async-wrapper');
 const password = encodeURIComponent('HNcLrnsCMenbCxf6');
-const connectionString = `mongodb+srv://eclipsesword777:${password}@cluster0.dvhrksp.mongodb.net/Library?retryWrites=true&w=majority&appName=Cluster0`;
 const {validateID} = require('./middleware/validateID');
 
 app.use(express.json());
@@ -14,7 +13,6 @@ app.use(express.static('./public'));
 app.use('/api/books', require('./routes/books'));
 app.use('/api/members', require('./routes/members')); 
 app.use('/api/transactions', require('./routes/transactions')); 
-
 //will set all these routes up later in a file
 
 app.get('/addbook', (req, res) => {
