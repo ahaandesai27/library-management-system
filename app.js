@@ -1,12 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 5000;
 const connectDB = require('./db/connectDB');
 const wrap = require('express-async-wrapper');
-const {validateID} = require('./middleware/validateID');
-const { validate } = require('./schema/books');
-const password = encodeURIComponent("htRhp4BsHhTdLWce");
+const password = encodeURIComponent('HNcLrnsCMenbCxf6');
 const connectionString = `mongodb+srv://eclipsesword777:${password}@cluster0.dvhrksp.mongodb.net/Library?retryWrites=true&w=majority&appName=Cluster0`;
+const {validateID} = require('./middleware/validateID');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -51,7 +51,7 @@ app.get('/members/:id/transactions', validateID, (req, res) => {
 
 
 const start = wrap(async () => {
-    await connectDB(connectionString);
+    await connectDB(process.env.MONGO_URI);
     console.log('Connected to the database');
     console.log(__dirname)
     app.listen(port, console.log(`Server is running on http://localhost:${port}`));
