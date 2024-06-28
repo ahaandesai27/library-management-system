@@ -13,7 +13,6 @@ A website that simulates the librarians's/administrator's system interface at an
 - [lit-html](https://lit.dev/docs/v1/lit-html/introduction/) for certain templates
 - [jQuery](https://jquery.com/) for form handling
 - [axios](https://www.npmjs.com/package/axios) for most HTTP requests
-- [htmx](https://htmx.org/) for simpler HTTP requests, such as POST
 
 ### Backend:
 - Node.js with Express.js for server side logic
