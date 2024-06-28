@@ -8,23 +8,39 @@ $(document).ready(() => {
     if (transaction_id && transaction_id != "modify"){
         $('#transaction-id').val(transaction_id);
     }
+
     $('#get-transaction').click(async (e) => {
         try {
             id = $('#transaction-id').val();
-            const response = await axios.get(`/api/transactions/${id}`);
-            const {book_id, member_id, issue_date, return_date, fine_amount} = response.data;
-
+            let response;
+            try {
+                response = await axios.get(`/api/transactions/${id}`);
+                console.log(response);
+            } 
+            catch (error) {
+                if (error.response.status == 404) {
+                    alert("Transaction not found!");
+                    return;
+                }
+            }
+            
+            const { book_id, member_id, issue_date, return_date, fine_amount } = response.data;
+    
             $('#book-id').val(book_id);
             $('#member-id').val(member_id);
-            $('#issue-date').val(formatDate(issue_date).split('-').reverse().join('-'));           //check
+            $('#issue-date').val(formatDate(issue_date).split('-').reverse().join('-'));
             $('#return-date').val(formatDate(return_date).split('-').reverse().join('-'));
             $('#fine-amount').val(fine_amount);
         } catch (error) {
-            alert("An error occured");
+            if (error.response && error.response.status === 404) {
+                alert("Transaction not found!");
+            } else {
+                alert("An error occurred");
+            }
         }
-    })
+    });
 
-    $('#modify-transaction').submit(async (e) => {
+    $('#editButton').click(async (e) => {
         e.preventDefault();
         const issue_date = $('#issue-date').val();
         const return_date = $('#return-date').val();
@@ -47,8 +63,9 @@ $(document).ready(() => {
     })
 
     $('#deleteButton').click(async (e) => {
+        e.preventDefault();
         try {
-            await axios.delete(`/api/transactions/${id}`);
+            await axios.delete(`/api/transactions/${transaction_id}`);
             alert("Deleted successfully!");
             $('#book-id').val('');
             $('#member-id').val(''); 
@@ -56,8 +73,9 @@ $(document).ready(() => {
             $('#return-date').val('');
             $('#fine-amount').val('');
         } catch (error) {
+            console.log(error);
             alert("An error occured");
-            //TODO: The deletion works but the server sends another request after that.
+            //TODO: The deletion works but the server sends another response after that.
         }
     })
 });

@@ -23,7 +23,6 @@ const port = 5000;
 const start = wrap(async () => {
     await connectDB(process.env.MONGO_URI);
     console.log('Connected to the database');
-    console.log(__dirname)
     app.listen(port, console.log(`Server is running on http://localhost:${port}`));
 })
 
